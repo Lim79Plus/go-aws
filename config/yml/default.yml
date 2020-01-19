@@ -1,0 +1,7 @@
+app:
+  name: go-aws
+  env: productions
+aws:
+  s3:
+    url: xxx.xxx.xxx:4572
+    bucket: s3-productions

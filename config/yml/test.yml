@@ -1,0 +1,7 @@
+app:
+  name: test-go-aws
+  env: test
+aws:
+  s3:
+    url: test_s3_url
+    bucket: test_s3_bucket

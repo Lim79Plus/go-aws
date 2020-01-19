@@ -1,0 +1,7 @@
+app:
+  name: go-aws
+  env: develop
+aws:
+  s3:
+    url: localhost:4572
+    bucket: s3-local
