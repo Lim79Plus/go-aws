@@ -2,6 +2,9 @@ app:
   name: go-aws
   env: develop
 aws:
+  credential:
+    access_key: develop_access_key #これはNG
+    secret_key: develop_secret_key #これはNG
   s3:
-    url: localhost:4572
+    url: http://localhost:4572
     bucket: s3-local
