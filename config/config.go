@@ -45,7 +45,6 @@ func getWorkDir() string {
 }
 
 func isDev() bool {
-	log.Println("Environment", Environment)
 	return Environment == "develop" || Environment == "test"
 }
 
@@ -58,8 +57,6 @@ func readConfig() Config {
 	if err != nil {
 		panic(err)
 	}
-
-	// log.Printf("buf: %+v\n", string(buf))
 
 	// structにUnmasrshal
 	err = yaml.Unmarshal(buf, &Conf)
