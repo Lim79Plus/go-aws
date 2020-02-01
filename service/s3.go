@@ -79,6 +79,19 @@ func getBucketItems(bucket string) {
 	}
 }
 
+func openFicture() func() (*os.File, string) {
+	return func() (*os.File, string) {
+		filename := "gogo.png"
+		// Uploadするファイルの読み込み
+		file, err := os.Open(filename)
+		if err != nil {
+			log.Fatalf("Unable to open file %s, %v", filename, err)
+		}
+		defer file.Close()
+		return file, filename
+	}
+}
+
 func uplocadItemToBucket() {
 	bucket := "s3-local"
 	filename := "gogo.png"
