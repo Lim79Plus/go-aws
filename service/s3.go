@@ -17,6 +17,18 @@ import (
 // svc s3 access instance
 var svc *s3.S3
 
+// S3Service interface
+type S3Service interface {
+	UplocadFileToS3Bucket(file io.Reader, fileName string) error
+}
+
+type s3Service struct{}
+
+// NewS3Service new
+func NewS3Service() S3Service {
+	return &s3Service{}
+}
+
 // S3Access entryPoint
 func S3Access() {
 	log.Println("s3.access()")
@@ -121,7 +133,7 @@ func uplocadItemToBucket() {
 }
 
 // UplocadFileToS3Bucket ファイルをS3にアップロードする
-func UplocadFileToS3Bucket(file io.Reader, fileName string) error {
+func (s s3Service) UplocadFileToS3Bucket(file io.Reader, fileName string) error {
 	bucket := config.Conf.Aws.S3.Bucket
 
 	// S3のアップロードインスタンスの取得

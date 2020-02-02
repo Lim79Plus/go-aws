@@ -9,7 +9,10 @@ import (
 )
 
 // UploadPicture 画像のアップロード
-func UploadPicture() echo.HandlerFunc {
+func UploadPicture(s3 service.S3Service) echo.HandlerFunc {
+	if s3 == nil {
+		s3 = service.NewS3Service()
+	}
 	return func(c echo.Context) error {
 		// Source
 		file, err := c.FormFile("uploadfile")
@@ -25,7 +28,7 @@ func UploadPicture() echo.HandlerFunc {
 		}
 		defer src.Close()
 
-		service.UplocadFileToS3Bucket(src, file.Filename)
+		s3.UplocadFileToS3Bucket(src, file.Filename)
 
 		return c.String(http.StatusOK, "UploadPicture successed:"+file.Filename)
 	}

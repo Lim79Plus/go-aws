@@ -9,7 +9,7 @@ import (
 func Initialize() {
 	e := echo.New()
 	e.Static("/", "view/form.html")
-	e.POST("/upload", handler.UploadPicture())
+	e.POST("/upload", handler.UploadPicture(nil))
 
 	e.Logger.Fatal(e.Start(":1234"))
 }
