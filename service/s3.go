@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+	"io"
 	"log"
 	"os"
 
@@ -116,4 +118,26 @@ func uplocadItemToBucket() {
 	}
 
 	log.Printf("Successfully uploaded %q to %q\n", filename, bucket)
+}
+
+// UplocadFileToS3Bucket ファイルをS3にアップロードする
+func UplocadFileToS3Bucket(file io.Reader, fileName string) error {
+	bucket := config.Conf.Aws.S3.Bucket
+
+	// S3のアップロードインスタンスの取得
+	sess := createNewS3Session()
+	uploader := s3manager.NewUploader(sess)
+	_, err := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(bucket),
+		Key:    aws.String(fileName),
+		Body:   file,
+	})
+	if err != nil {
+		// Print the error and exit.
+		log.Fatalf("Unable to upload %s to %s, %v", fileName, bucket, err)
+		return errors.New("")
+	}
+
+	log.Printf("Successfully uploaded %q to %q\n", fileName, bucket)
+	return nil
 }

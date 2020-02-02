@@ -1,11 +1,10 @@
 package handler
 
 import (
-	"io"
 	"log"
 	"net/http"
-	"os"
 
+	"github.com/Lim79Plus/go-aws/service"
 	"github.com/labstack/echo/v4"
 )
 
@@ -26,17 +25,7 @@ func UploadPicture() echo.HandlerFunc {
 		}
 		defer src.Close()
 
-		// Destination os上にアップロードされたファイルと同名の空ファイルを作成する
-		dst, err := os.Create(file.Filename)
-		if err != nil {
-			return err
-		}
-		defer dst.Close()
-
-		// Copy
-		if _, err = io.Copy(dst, src); err != nil {
-			return err
-		}
+		service.UplocadFileToS3Bucket(src, file.Filename)
 
 		return c.String(http.StatusOK, "UploadPicture successed:"+file.Filename)
 	}
